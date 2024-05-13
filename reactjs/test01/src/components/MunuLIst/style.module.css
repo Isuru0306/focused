@@ -1,0 +1,8 @@
+.container {
+  border: solid 1px rgb(137, 146, 137);
+  height: 250px;
+  width: 250px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}

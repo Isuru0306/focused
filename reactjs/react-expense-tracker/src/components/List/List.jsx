@@ -1,0 +1,17 @@
+import { useSelector } from "react-redux";
+import { ListItem } from "../ListItem/ListItem";
+
+export function List() {
+  const items = useSelector((state) => state.EXPENSE.expenses);
+  return (
+    <div style={{ overflowY: "scroll", height: "40%" }}>
+      <table className="table table-hover table-borderless">
+        <tbody>
+          {items?.map((item, index) => (
+            <ListItem key={item.name + index} item={item} />
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
