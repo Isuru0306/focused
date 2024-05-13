@@ -1,0 +1,9 @@
+title: My simple page
+templateScript: /my-first-light-module/templates/pages/my-simple-page.ftl
+renderType: freemarker
+visible: true
+areas:
+  main:
+    renderType: freemarker
+    templateScript: /my-first-light-module/templates/components/banner.ftl
+    dialog: my-first-light-module:components/banner
