@@ -22,7 +22,10 @@ export function NoteForm({
   onClickDelete,
   onSubmit,
 }) {
-  const [formValues, setFormValues] = useState({ title: "", content: "" });
+  const [formValues, setFormValues] = useState({
+    title: note?.title ?? "",
+    content: note?.content ?? "",
+  });
   const [formErrors, setFormErrors] = useState({
     title: true,
     content: true,
@@ -67,25 +70,27 @@ export function NoteForm({
     <div className="mb-5">
       <label className="form-label">Title</label>
       <input
+        value={formValues?.title}
         onChange={updateFormValues}
         type="text"
         name="title"
         className="form-control"
       />
-      <FieldError msg={formErrors.title} />
+      <FieldError msg={formErrors?.title} />
     </div>
   );
   const contentInput = (
     <div className="mb-5">
       <label className="form-label">Content</label>
       <textarea
+        value={formValues?.content}
         onChange={updateFormValues}
         type="text"
         name="content"
         className="form-control"
         row="5"
       />
-      <FieldError msg={formErrors.content} />
+      <FieldError msg={formErrors?.content} />
     </div>
   );
 
