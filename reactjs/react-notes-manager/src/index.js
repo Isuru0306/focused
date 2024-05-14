@@ -10,6 +10,8 @@ import NoteBrowse from "pages/NoteBrowse/NoteBrowse";
 import Note from "pages/Note/Note";
 import NoteCreate from "pages/NoteCreate/NoteCreate";
 import PageNotFound from "pages/PageNotFound/PageNotFound";
+import SignIn from "pages/SignIn/Signin";
+import SignUp from "pages/SignUp/Signup";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -18,6 +20,8 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/" element={<App />}>
             <Route path="/" element={<NoteBrowse />} />
             <Route path="/note/:noteId" element={<Note />} />
