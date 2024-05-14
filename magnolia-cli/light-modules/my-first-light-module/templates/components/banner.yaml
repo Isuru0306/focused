@@ -1,4 +1,0 @@
-title: banner
-renderType: freemarker
-templateScript: /my-first-light-module/templates/components/banner.ftl
-dialog: my-first-light-module:components/banner

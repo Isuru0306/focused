@@ -1,9 +1,0 @@
-title: title
-renderType: freemarker
-templateScript: /my-first-light-module/templates/components/title.ftl
-visible: true
-areas:
-  main:
-    availableComponents:
-      title:
-        id: /my-first-light-module/templates/components/title
