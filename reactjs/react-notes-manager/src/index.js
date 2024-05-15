@@ -12,6 +12,9 @@ import NoteCreate from "pages/NoteCreate/NoteCreate";
 import PageNotFound from "pages/PageNotFound/PageNotFound";
 import SignIn from "pages/SignIn/Signin";
 import SignUp from "pages/SignUp/Signup";
+import { FirebaseApp } from "services/firebase";
+
+FirebaseApp.init();
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
