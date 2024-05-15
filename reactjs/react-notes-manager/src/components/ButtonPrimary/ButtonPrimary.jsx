@@ -4,12 +4,13 @@ export function ButtonPrimary({
   children,
   onClick,
   isDisabled,
+  className,
 }) {
   return (
     <button
       onClick={onClick}
       type={type}
-      className={`btn btn-primary ${s.button}`}
+      className={`btn btn-primary ${s.button} ${className}`}
       disabled={isDisabled}
     >
       {children}
