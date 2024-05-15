@@ -19,22 +19,20 @@ FirebaseApp.init();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/" element={<ProtectApp />}>
-              <Route path="/" element={<NoteBrowse />} />
-              <Route path="/note/:noteId" element={<Note />} />
-              <Route path="/note/new" element={<NoteCreate />} />
-              <Route path="*" element={<PageNotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/" element={<ProtectApp />}>
+            <Route path="/" element={<NoteBrowse />} />
+            <Route path="/note/:noteId" element={<Note />} />
+            <Route path="/note/new" element={<NoteCreate />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </PersistGate>
+  </Provider>
 );
