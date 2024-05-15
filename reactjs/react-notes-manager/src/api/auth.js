@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-export class AuthAPI {
+export default class AuthAPI {
   static async signin(email, password) {
     const response = await signInWithEmailAndPassword(
       FirebaseApp.auth,

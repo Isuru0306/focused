@@ -1,19 +1,32 @@
 import { ButtonPrimary } from "components/ButtonPrimary/ButtonPrimary";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "components/Input/Input";
 import { useState } from "react";
 
 import s from "./style.module.css";
 import { AuthLayout } from "layouts/AuthLayout/AuthLayout";
+import AuthAPI from "api/auth";
+import { setUser } from "store/auth/auth-slice";
+import { useDispatch } from "react-redux";
+import { toast } from "utils/sweet-alert";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const submit = (e) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const submit = async (e) => {
     e.preventDefault();
-    console.log("submited ", email, password);
+    try {
+      const user = await AuthAPI.signin(email, password);
+      dispatch(setUser(user));
+      await toast("success", "Authenticated..!");
+      navigate("/");
+    } catch (error) {
+      toast("error", "Authentication failed..!");
+    }
   };
-  console.log(email, password);
+
   const form = (
     <div className={s.formContainer}>
       <h2 className={s.title}>
