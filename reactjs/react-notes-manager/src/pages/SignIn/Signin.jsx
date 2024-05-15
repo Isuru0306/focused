@@ -34,7 +34,7 @@ export default function SignIn() {
         to access your team notes
       </h2>
       <form onSubmit={submit} className={s.formGroup}>
-        <Input placeholder={"Email"} onTextChange={setEmail} />
+        <Input type={"email"} placeholder={"Email"} onTextChange={setEmail} />
         <Input
           placeholder={"Password"}
           type="password"
@@ -44,7 +44,7 @@ export default function SignIn() {
           Sign in!
         </ButtonPrimary>
         <span>
-          Don't have an account yet ? <Link to={"/signup"}>Signup</Link>
+          Don't have an account yet ? <Link to={"/sign-up"}>Signup</Link>
         </span>
       </form>
     </div>
