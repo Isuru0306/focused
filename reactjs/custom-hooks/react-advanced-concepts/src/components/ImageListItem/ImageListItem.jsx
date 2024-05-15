@@ -1,6 +1,13 @@
+import { saveAs } from "file-saver";
 import "./ImageListItem.css";
 
 export function ImageListItem({ img }) {
+  async function downloadImage(url) {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    saveAs(blob, img.author + ".jpg");
+  }
+
   return (
     <div className="card">
       <a href={img.url}>
@@ -13,7 +20,12 @@ export function ImageListItem({ img }) {
           <div className="card_subtitle">
             Original size : {img.height}x{img.width}
           </div>
-          <button>Download</button>
+          <button
+            className="card_button"
+            onClick={() => downloadImage(img.download_url)}
+          >
+            Download
+          </button>
         </div>
       </div>
     </div>
