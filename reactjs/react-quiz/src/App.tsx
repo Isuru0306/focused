@@ -1,4 +1,4 @@
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Box, Flex, Image, Spinner } from "@chakra-ui/react";
 import logoImg from "./assets/logo.png";
 import bubbleImg from "./assets/bubble.png";
 import "./App.css";
@@ -8,12 +8,17 @@ import {
   FetchQuizParams,
   QuizCategory,
   QuizDifficulty,
+  QuizItem,
   QuizType,
 } from "./types/quiz-type";
 import { SetQuizCategory } from "./features/SetQuizCategory";
 import { QuizAPI } from "./api/quiz-api";
+import { SetQuizDifficulty } from "./features/SetQuizDifficulty";
+import { PlayQuiz } from "./features/PlayQuiz/PlayQuiz";
+import { Score } from "./features/PlayQuiz/Score";
 
 enum Step {
+  Loading,
   SetQuestionQty,
   SetQuestionCategory,
   SetQuestionDifficulty,
@@ -21,7 +26,7 @@ enum Step {
   Score,
 }
 export default function App() {
-  const [step, setStep] = useState<Step>(Step.SetQuestionQty);
+  const [step, setStep] = useState<Step>(Step.Loading);
   const [quizParams, setQuizParams] = useState<FetchQuizParams>({
     amount: 0,
     category: "",
@@ -29,6 +34,8 @@ export default function App() {
     type: QuizType.Multiple,
   });
   const [categories, setCategories] = useState<QuizCategory[]>([]);
+  const [quiz, setQuiz] = useState<QuizItem[]>([]);
+  const [history, setHistory] = useState<boolean[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -36,6 +43,7 @@ export default function App() {
         { id: -1, name: "Mixed" },
         ...(await QuizAPI.fetchCategories()),
       ]);
+      setStep(Step.SetQuestionQty);
     })();
   }, []);
 
@@ -47,6 +55,19 @@ export default function App() {
 
   const renderScreenByStep = () => {
     switch (step) {
+      case Step.Loading:
+        return (
+          <Flex
+            top={0}
+            justify="center"
+            alignItems="center"
+            position="absolute"
+            minHeight={"100vh"}
+            w={"100%"}
+          >
+            <Spinner />
+          </Flex>
+        );
       case Step.SetQuestionQty:
         return (
           <SetQuestionQty
@@ -74,11 +95,44 @@ export default function App() {
           />
         );
       case Step.SetQuestionDifficulty:
-        return <></>;
+        return (
+          <SetQuizDifficulty
+            onClickNext={async (difficulty: QuizDifficulty) => {
+              const params = {
+                ...quizParams,
+                difficulty,
+              };
+              setQuizParams(params);
+              const quizResp = await QuizAPI.fetchQuiz(params);
+              if (quizResp.length > 0) {
+                setQuiz(quizResp);
+                setStep(Step.Play);
+              } else {
+                alert(
+                  `Couldn't find ${params.amount} questions for this category, restarting game`
+                );
+                setStep(Step.SetQuestionQty);
+              }
+            }}
+          />
+        );
       case Step.Play:
-        return <></>;
+        return (
+          <PlayQuiz
+            onFinished={(history_: boolean[]) => {
+              setHistory(history_);
+              setStep(Step.Score);
+            }}
+            quiz={quiz}
+          />
+        );
       case Step.Score:
-        return <></>;
+        return (
+          <Score
+            history={history}
+            onNext={() => setStep(Step.SetQuestionQty)}
+          />
+        );
       default:
         return null;
     }
